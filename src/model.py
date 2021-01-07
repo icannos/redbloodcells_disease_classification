@@ -1,3 +1,6 @@
+'''
+In this file we store the models architectures we tested.
+'''
 
 import torch
 import torch.nn as nn

@@ -1,4 +1,7 @@
-
+'''
+This file defines the dataset class, they supposed raw data have been preprocessed into picklable files
+containing a list of sequences and a list of label corresponding to the sequences.
+'''
 from torch.utils.data import Dataset
 import pickle as pk
 import numpy as np
