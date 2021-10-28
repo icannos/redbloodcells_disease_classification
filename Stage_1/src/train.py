@@ -3,6 +3,21 @@ Author Maxime Darrin
 
 Code for paper: ...
 
+This file contains the training code to learn to classify red blood cells films.
+It should be provided with a path to a dataset directory of the with the following structure:
+
+train/
+    - dataset.csv
+    - img/
+
+validation/
+    - dataset.csv
+    - img/
+
+test/
+    - dataset.csv
+    - img/
+
 """
 import argparse
 
@@ -12,7 +27,6 @@ from pathlib import Path
 from PIL import Image
 import numpy as np
 from matplotlib import pyplot as plt
-import random
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
@@ -182,7 +196,11 @@ if __name__ == "__main__":
         "-e", "--epoch", type=int, default=20, help="Number of epochs to run."
     )
     parser.add_argument(
-        "-s", "--seed", type=int, default=80085, help="Number of epochs to run."
+        "-s",
+        "--seed",
+        type=int,
+        default=80085,
+        help="For reproducibility, random seed to use for random, numpy and torch.",
     )
     args = parser.parse_args()
 
@@ -318,10 +336,6 @@ if __name__ == "__main__":
     runner = SupervisedRunner()
 
     loaders = {"train": train_loader, "valid": valid_loader}
-
-    # Commented out IPython magic to ensure Python compatibility.
-    # %load_ext tensorboard
-    # %tensorboard --logdir logs/
 
     runner.train(
         model=model,
