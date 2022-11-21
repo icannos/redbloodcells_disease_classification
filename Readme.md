@@ -1,4 +1,4 @@
-### Code for paper Classification of Red Cell Dynamics with Convolutional and Recurrent Neural Networks: A Sickle Cell Disease Case Study (Under Review).
+### Code for the paper: Classification of Red Cell Dynamics with Convolutional and Recurrent Neural Networks: A Sickle Cell Disease Case Study (Under Review).
 
 ### Abstract
 
