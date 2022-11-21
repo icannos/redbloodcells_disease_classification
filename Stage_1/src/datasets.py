@@ -1,21 +1,21 @@
-from torch.utils.data import Dataset
-import pandas as pd
-from pathlib import Path
-from PIL import Image
-import numpy as np
-from matplotlib import pyplot as plt
 import random
-import torch
-import torch.nn as nn
-from torch.nn import functional as F
 from math import exp
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import torch
+from PIL import Image
 from torch.autograd import Variable
+from torch.nn import functional as F
+from torch.utils.data import Dataset
 from tqdm import tqdm
-import datetime
-import random
 
 
 def random_downsampling(l, k):
+    '''
+    Take a random subset of k elements in a list of length l
+    '''
     if l < k:
         return np.asarray(list(range(l)))
 
@@ -33,6 +33,9 @@ def gaussian(window_size, sigma):
 
 
 def create_window(window_size, channel):
+    '''
+    Utils to create a window for SSIM
+    '''
     _1D_window = gaussian(window_size, 1.5).unsqueeze(1)
     _2D_window = _1D_window.mm(_1D_window.t()).float().unsqueeze(0).unsqueeze(0)
     window = Variable(
@@ -42,6 +45,9 @@ def create_window(window_size, channel):
 
 
 def _ssim(img1, img2, window, window_size, channel, size_average=True):
+    '''
+    Utils to compute SSIM
+    '''
     mu1 = F.conv2d(img1, window, padding=window_size // 2, groups=channel)
     mu2 = F.conv2d(img2, window, padding=window_size // 2, groups=channel)
 
@@ -74,6 +80,9 @@ def _ssim(img1, img2, window, window_size, channel, size_average=True):
 
 
 def ssim(img1, img2, window_size=11, size_average=True):
+    '''
+    Computes the SSIM index between two images.
+    '''
     (_, channel, _, _) = img1.size()
     window = create_window(window_size, channel)
 
@@ -85,6 +94,9 @@ def ssim(img1, img2, window_size=11, size_average=True):
 
 
 def getmax_sim(sim):
+    """
+    Get the pair of images with the highest similarity. It is used to remove the most similar consecutive images
+    """
     m = 0
     idx = None
 
@@ -100,9 +112,8 @@ def getmax_sim(sim):
 def ssim_downsampling(sequence, k):
     """
     Perform the downsampling using pytorch (and the GPU, it is really really faster !)
-    :param sequence:
-    :param k:
-    :return:
+    It computes the ssim between each image and the next one. It then recursively select the most similar pair of images
+    and remove one of them. It stops when the number of images is equal to k
     """
 
     sequence = sequence.to("cuda")
@@ -154,8 +165,6 @@ def fmax_length(x):
 def pad_collate(batch, l=None):
     """
     Pad a sequence of image with black images
-    :param batch:
-    :return:
     """
     xx, yy = zip(*batch)
 
@@ -175,6 +184,7 @@ def pad_collate(batch, l=None):
 class GlobulesDataset(Dataset):
     """
     Load the data from file and provide an interface for the pytorch code.
+    It is the main interface to the data
     """
 
     def __init__(

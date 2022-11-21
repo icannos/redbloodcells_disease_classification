@@ -9,12 +9,10 @@ catalyst
 ```
 
 ### Structure
-```
-Stage 1 corresponds to C-RNN (Approach 1) experiments and Stage 2 corresponds to CNN (Approach 2) experiments.
-The directories also contain the preprocessing files, trained model and sample data for testing.
 
-Subdirectories:
-src/ : data loading and preprocessing, training scripts / notebook
-model/ : trained model available for testing
-data/ : sample data for testing
-```
+We provide code and demos for both stages. The code for the first stage is in the `Stage_1` folder. 
+The code for the second stage is in the `Stage_2` folder. In both case we produce the sources, the pretrained models 
+and sample data.
+
+
+

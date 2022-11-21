@@ -119,6 +119,10 @@ class RecurrentConvNet(nn.Module):
 
 
 class FixedSizeConvnet(nn.Module):
+    '''
+    This is a simpler version of the Convnet method relyig only on a simple convnet and not a resnet.
+    We used it as baseline to compare our results with.
+    '''
     def __init__(self, in_channels, n_classes, softmax: bool = True, device="cpu"):
         super().__init__()
 
@@ -291,9 +295,6 @@ if __name__ == "__main__":
 
     # Sampler used to balance the dataset
     # It will sample more often elements from an under represented class
-    print(len(trainset))
-    print(trainset.get_class(5))
-    print([weights[trainset.get_class(i)] for i in range(len(trainset))][:100])
     train_sampler = torch.utils.data.sampler.WeightedRandomSampler(
         [weights[trainset.get_class(i)] for i in range(len(trainset))], len(trainset)
     )
