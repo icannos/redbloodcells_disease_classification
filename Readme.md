@@ -15,4 +15,4 @@ catalyst
 
 ### Structure
 
-We provide code and demos for both stages as individual directories (`Stage_1` and `Stage_2`). In both case we provide the sources, the pretrained models and sample data. `Stage_1` performs the separation of unreliable samples from the data and `Stage_2` performs the classification of Tank-treading and Flipping cells.
+We provide code and demos for both stages as individual directories (`Stage_1` and `Stage_2`). In both case we provide the sources, the pretrained models and sample data. `Stage_1` performs the separation of unreliable samples from the data and `Stage_2` performs the classification of Tank-treading and Flipping cells. We use C-RNN model described in the paper for Stage 1 and CNN model (ResNet) for stage 2.
